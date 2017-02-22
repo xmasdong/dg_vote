@@ -1,0 +1,134 @@
+<input type="hidden" name="reply_id" value="{$reply['id']}" />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        班级投票设置
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">是否启用</label>
+            <div class="col-sm-9 col-xs-12">
+                <select name="status" id="status" class="form-control">
+                    <option value="1">启用</option>
+                    <option value="0">禁用</option>
+                </select>
+                {if isset($reply['status'])}
+                <script>$("#status").val('{php echo $reply['status']}');</script>
+                {/if}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动主题</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="title" class="form-control" placeholder="" name="title" value="{$reply['title']}">
+                <div class="help-block">用于展示在排行榜页面的活动主题</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">版权设置</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="copyright" class="form-control" placeholder="" name="copyright" value="{$reply['copyright']}">
+                <div class="help-block">用于展示你的版权信息</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">活动时间</label>
+            <div class="col-sm-9 col-xs-12">
+                {php echo tpl_form_field_daterange('datelimit', array('starttime'=>date('Y-m-d',$reply['starttime']),'endtime'=>date('Y-m-d',$reply['endtime'])))}
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题1</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="first_title" class="form-control" placeholder="" name="first_title" value="{$reply['first_title']}">
+                <div class="help-block">用于展示投票返回结果的显示,可选参数 班级: #banjiname# 票数: #vote# <br><br>例:你正在为#banjiname#投票,当前票数#vote#,请回复验证码以完成投票<br><br>显示:你正在为机电工程1班投票,当前票数100票,请回复验证码以完成投票</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">回复图文封面</label>
+            <div class="col-sm-9 col-xs-12">
+                {php echo tpl_form_field_image('fengmian',$reply['fengmian']);}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题2</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="second_title" class="form-control" placeholder="" name="second_title" value="{$reply['second_title']}">
+                <div class="help-block">可选参数 验证码: #code# <br><br>例:你的验证码为:#code# <br><br>显示:你的验证码为:DG1208</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题3</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="third_title" class="form-control" placeholder="" name="third_title" value="{$reply['third_title']}">
+                <div class="help-block">如果有赞助商,这里可以填入赞助商的信息,如果没有,建议使用'查看排行榜'</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题3链接</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="third_url" class="form-control" placeholder="" name="third_url" value="{$reply['third_url']}">
+                <div class="help-block">图文首页标题3对应的跳转链接</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题3图片</label>
+            <div class="col-sm-9 col-xs-12">
+                {php echo tpl_form_field_image('third_img',$reply['third_img']);}
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题4</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="fourth_title" class="form-control" placeholder="" name="fourth_title" value="{$reply['fourth_title']}">
+                <div class="help-block">如果有赞助商,这里可以填入赞助商的信息,如果没有,建议使用'查看排行榜'[若无,请留空]</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题4链接</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="fourth_url" class="form-control" placeholder="" name="fourth_url" value="{$reply['fourth_url']}">
+                <div class="help-block">图文首页标题4对应的跳转链接[若无,请留空]</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题4图片[若无,请留空]</label>
+            <div class="col-sm-9 col-xs-12">
+                {php echo tpl_form_field_image('fourth_img',$reply['fourth_img']);}
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题5</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="fifth_title" class="form-control" placeholder="" name="fifth_title" value="{$reply['fifth_title']}">
+                <div class="help-block">如果有赞助商,这里可以填入赞助商的信息,如果没有,建议使用'查看排行榜'[若无,请留空]</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题5链接</label>
+            <div class="col-sm-9 col-xs-12">
+                <input type="text" id="fifth_url" class="form-control" placeholder="" name="fifth_url" value="{$reply['fifth_url']}">
+                <div class="help-block">图文首页标题5对应的跳转链接[若无,请留空]</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-12 col-sm-3 col-md-2 control-label">图文首页标题5图片[若无,请留空]</label>
+            <div class="col-sm-9 col-xs-12">
+                {php echo tpl_form_field_image('fifth_img',$reply['fifth_img']);}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,187 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>{php echo $title }</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href='<?php echo MODULE_URL."template/static/reset.css"?>'>
+    <link rel="stylesheet" type="text/css" href='<?php echo MODULE_URL."template/static/index.css"?>'>
+    <link rel="stylesheet" type="text/css" href='<?php echo MODULE_URL."template/static/detail.css"?>'>
+    <script src='<?php echo MODULE_URL."template/static/zepto.min.js"?>' type="text/javascript" charset="utf-8"></script>
+    <script src='<?php echo MODULE_URL."template/static/touch.js"?>' type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src='<?php echo MODULE_URL."template/static/jweixin-1.0.0.js"?>'></script>
+    <style type="text/css">
+
+        .index_tab{width:100%;border-collapse:collapse;border:1px solid #C6E2FF;margin:8px 0;}
+        .index_tab td{line-height:35px;border:1px solid #C6E2FF;padding-left:4px;}
+        tr.tr_top td{line-height:32px;border:none;background-color:#C6E2FF;color:#fff;font-weight:bold;}
+        td.td_center{text-align:center;}
+        .ys01{background-color:#EBEBEB;}
+    </style>
+    <script language="javascript" type="text/javascript">
+        window.onload = function(){
+            var oTable = document.getElementById("bbsTab");
+            for(var i=0;i<oTable.rows.length;i++){
+                oTable.rows[i].cells[0].innerHTML = (i+1);
+                if(i%2==0)    //偶数行
+                    oTable.rows[i].className = "ys01";
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        $("body").on('touchmove', function (event) {event.preventDefault();});
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            WeixinJSBridge.call('hideOptionMenu');
+        });
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            WeixinJSBridge.call('hideToolbar');
+        });
+    </script>
+</head>
+<body>
+<div id="bg" style="height: 725px;"></div>
+<script type="text/javascript">
+    var winH=$(window).height();
+    $("#bg").height(winH);
+</script>
+
+<div class="container container-up" id="container">
+    <div class="nav-title">
+        <p>{php echo $title}</p>
+        <p>{php echo date("Y-m-d H:i:s", $reply['starttime'])}--{php echo date("Y-m-d H:i:s", $reply['endtime'])}</p>
+    </div>
+    <div class="header-nav" style="background-image: image('http://m.chudaokeji.com/attachment/images/bg.jpeg')">
+        <div class="nav-tips">
+            <br>
+            <p>参加班级：{php echo count($list)}</p>
+            <p>投票人次：{php echo $totalvote}</p>
+
+        </div>
+    </div>
+
+    <div class="new-number">
+        <!--<br><center><p>说明：数据实时更新</p></center>-->
+        <table class="index_tab">
+            <tbody><tr class="tr_top">
+                <td class="td_center">排名</td>
+                <td class="td_center">班级</td>
+                <td class="td_center">得票数</td>
+
+
+            </tr>
+
+            {loop $list $item}
+            </tbody><tbody id="bbsTab">
+        <tr class="ys01">
+            <td class="td_center">{php echo $i }</td>
+
+            <td class="td_center">{php echo $item['banjiname']}（投票码：{php echo $item['bianhao']}）</td>
+            <td class="td_center"> {php echo $item['vote']}</td>
+            {php $i++} {/loop}
+
+
+        </tr>
+
+
+        </tbody>
+        </table> <br>
+    </div>
+
+
+
+</div>
+
+
+<p style="font-size: 1.2rem; color: #999; text-align: center;line-height: 4rem; ">©2016{php echo $copyright }版权所有</p>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("body").on('tap','#nav-join',function(){
+            $('.joinimg').addClass('joinimg-on');
+            enterJoin();
+        });
+        function enterDetail(obj) {
+            var me = $(obj).data('isme');
+            var pid = $(obj).data('pid');
+            // detailAjax(url,cid,pid,me);
+            $("#container").addClass('container-off');
+
+            $(document).on('touchmove',function(e) {
+                e.preventDefault()
+            });
+        }
+        function enterJoin(){
+            $("#container").addClass('container-right');
+//                $(document).on('touchmove',function(e) {
+//                    e.preventDefault()
+//                });
+        }
+        $("body").on('tap','.join-sure',function(){
+            var $imgurl=$('#showimg').attr('src');
+            var $nickname=$('.join-info-r input').eq(0).val();
+            var $motto=$('.join-info-r input').eq(1).val();
+            var contact=$('.join-info-r input').eq(2).val();
+            var $arr=[];
+            $arr.push($imgurl,$nickname,$motto,contact);
+            if($arr[0]==""){
+                alert("请上传你的照片！");
+
+            }else if($arr[1]==""){
+                alert("请填写你的昵称！");
+
+            }else if($arr[2]==""){
+                alert("请填写你的参赛宣言！");
+            }else if($arr[3]=="") {
+                alert("请填写你的联系方式");
+            }else {
+                $('form').submit();
+            }
+        });
+        $("body").on('tap','.join-back',function(){
+            $("img#showimg").attr("src","");
+            $('.uploading').css('display','block');
+            $(".joinimg").removeClass('joinimg-on');
+            $('#container').removeClass('container-right');
+        });
+        $("body").on('tap', '.detail-back', function() {
+            setTimeout(function() {
+                //$("#detail").remove();
+                $("#detail").removeClass('detail-on');
+                $("#container").removeClass('container-off');
+                $(".detail-review").css('z-index','10');
+                $(".detail-qcode").removeClass('detail-qcode-on');
+                $(".detail-vote-id").removeClass('detail-vote-id-on');
+                $(".detail-teach").removeClass('detail-vote-id-on');
+                $(".detail-item").addClass('others');
+                $(".detail-img").removeClass('on');
+                $(".detail-num i").html('当前名次');
+                $(".detail-info").removeClass('detail-info-on');
+            },200);
+        });
+        $("#uploadimg").change(function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            console.log("objUrl = "+objUrl) ;
+            if (objUrl) {
+                $("#showimg").attr("src", objUrl) ;
+                if($("#showimg").attr("src")!=""){
+                    $('.uploading').css('display','none');
+                }
+            }
+        });
+        function getObjectURL(file) {
+            var url = null ;
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
+        }
+    })
+</script>
+
+
+
+
+</body></html>

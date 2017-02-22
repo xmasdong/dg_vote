@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="0.6">
+	<application setting="false">
+		<name><![CDATA[高校常用投票系统[单向投票版]]]></name>
+		<identifie><![CDATA[dg_vote]]></identifie>
+		<version><![CDATA[0.1]]></version>
+		<type><![CDATA[other]]></type>
+		<ability><![CDATA[适用于回复投票码进行投票]]></ability>
+		<description><![CDATA[适用于回复投票码进行投票]]></description>
+		<author><![CDATA[冬瓜]]></author>
+		<url><![CDATA[http://bbs.we7.cc/]]></url>
+	</application>
+	<platform>
+		<message type="text" />
+		<message type="subscribe" />
+		<message type="unsubscribe" />
+		<subscribes>
+			<message type="text" />
+			<message type="unsubscribe" />
+		</subscribes>
+		<handles>
+			<message type="text" />
+			<message type="unsubscribe" />
+		</handles>
+		<rule embed="true" />
+		<card embed="false" />
+	</platform>
+	<bindings>
+		<menu>
+			<entry title="班级管理" do="list" state="" direct="false" />
+			<entry title="添加班级" do="add" state="" direct="false" />
+		</menu>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[CREATE TABLE IF NOT EXISTS `ims_dg_vote_data` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uniacid` int(11) DEFAULT NULL,
+  `banjiname` varchar(100) DEFAULT NULL,
+  `bianhao` varchar(100) DEFAULT NULL,
+  `vote` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+CREATE TABLE `ims_dg_vote_reply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rid` int(11) DEFAULT NULL,
+  `uniacid` int(11) DEFAULT NULL,
+  `fengmian` varchar(255) DEFAULT NULL COMMENT ' 图文首页封面',
+  `first_title` varchar(255) DEFAULT NULL COMMENT '第一个标题，展示投标班级信息，当前票数等设定',
+  `second_title` varchar(100) DEFAULT NULL COMMENT '验证码标题，建议使用默认配置',
+  `third_title` varchar(100) DEFAULT NULL COMMENT '此处为自定义内容，可放商家推广信息，或者任意跳转链接',
+  `third_url` varchar(255) DEFAULT NULL COMMENT ' 此处配置跳转的链接，若无数据，则为空',
+  `third_img` varchar(200) DEFAULT NULL COMMENT '此处为图片的链接，可为空，也可以是商家的头像\n',
+  `fourth_title` varchar(255) DEFAULT NULL,
+  `fourth_url` varchar(255) DEFAULT NULL,
+  `fourth_img` varchar(255) DEFAULT NULL,
+  `fifth_title` varchar(200) DEFAULT NULL,
+  `fifth_url` varchar(200) DEFAULT NULL,
+  `fifth_img` varchar(200) DEFAULT NULL,
+  `starttime` varchar(100) DEFAULT NULL COMMENT '开始时间',
+  `endtime` varchar(100) DEFAULT NULL COMMENT '结束时间',
+  `status` int(11) DEFAULT NULL COMMENT '是否启用，0 关闭，1 启用',
+  `copyright` varchar(200) DEFAULT NULL COMMENT '版权',
+  `title` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ims_dg_vote_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user` varchar(200) DEFAULT NULL,
+  `banjiname` varchar(100) DEFAULT NULL,
+  `bianhao` varchar(100) DEFAULT NULL,
+  `time` varchar(50) DEFAULT NULL,
+  `isvote` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+]]></install>
+	<uninstall><![CDATA[
+drop table `ims_dg_vote_data`;
+drop table `ims_dg_vote_reply`;
+drop table`ims_dg_vote_user`;
+]]></uninstall>
+	<upgrade><![CDATA[]]></upgrade>
+</manifest>
